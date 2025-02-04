@@ -45,12 +45,12 @@ public class AccountDAO {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
-                Account logged = new Account(
+                Account found = new Account(
                     resultSet.getInt("account_id"),
                     user.getUsername(),
                     user.getPassword()
                 ) ;
-                return logged;
+                return found;
             }
 
         } catch(SQLException e){
