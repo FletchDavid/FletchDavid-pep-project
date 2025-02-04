@@ -18,7 +18,11 @@ public class AccountService {
      * Requirement 1: New User Registrations
      */
     public Account addUser(Account user){
-        //TODO
+        if((user.getUsername() == null || user.getUsername() == "") || user.getPassword().length() < 4){
+            return null;
+        } else if(accountDAO.searchUsername(user)==null){
+            return accountDAO.addUser(user);
+        }
         return null;
     }
 
@@ -26,7 +30,6 @@ public class AccountService {
      * Requirement 2: User Login
      */
     public Account loginUser(Account user){
-        //TODO
-        return null;
+        return accountDAO.loginUser(user);
     }
 }
