@@ -91,15 +91,15 @@ public class SocialMediaController {
     private void updateMessageHandler(Context ctx) throws JsonProcessingException{
         ObjectMapper objectMapper = new ObjectMapper();
         int id = Integer.parseInt(ctx.pathParam("message_id"));
-        String messageText = ctx.body();
-        Message postedMessage = messageService.updateMessageByID(id, messageText);
+        Message message = objectMapper.readValue(ctx.body(), Message.class);
+        message.setMessage_id(id);
+        Message postedMessage = messageService.updateMessageByID(message);
         if(postedMessage != null) ctx.json(objectMapper.writeValueAsString(postedMessage));
         else ctx.status(400);
     }
 
     private void getUserMessagesHandler(Context ctx) throws JsonProcessingException{
-        ObjectMapper objectMapper = new ObjectMapper();
-        int id = objectMapper.readValue(ctx.body(), int.class);
+        int id = Integer.parseInt(ctx.pathParam("account_id"));
         List<Message> userMessages= messageService.getMessagesByUser(id);
         ctx.json(userMessages);
     }
